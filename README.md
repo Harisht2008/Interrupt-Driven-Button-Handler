@@ -41,3 +41,31 @@ immediately intuitive when you encounter them in SystemVerilog.
 ![IMG_3769](https://github.com/user-attachments/assets/7e89b2a1-cc20-4aff-85a0-557cb799af90)
 ![IMG_3770](https://github.com/user-attachments/assets/72d7c4bb-5e24-45a4-8c9c-4e84d91e9637)
 
+## Code:
+volatile int pressed = 0;
+
+void setup() {
+  pinMode(2, INPUT);
+  pinMode(10, OUTPUT);
+  Serial.begin(9600);
+  attachInterrupt(digitalPinToInterrupt(2), myISR, RISING);
+}
+
+void loop() {
+  delay(10000);
+  //to test whether or not interrupt works
+  if (pressed >= 5) {
+    pressed = 0;
+    digitalWrite(10, HIGH);
+    delay(2000);
+    digitalWrite(10, LOW);
+  }
+}
+
+void myISR() {
+  pressed++;
+  Serial.print("Press Count: ");
+  Serial.println(pressed);
+}
+
+
